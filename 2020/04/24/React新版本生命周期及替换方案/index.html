@@ -14,12 +14,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="React 16.3版本引入了两个新的生命周期函数，getDerivedStateFromProps，getSnapshotBeforeUpdate 。还有三个componentWillMount，componentWillReceiveProps，componentWillUpdate被标记为不安全的生命周期，将在17.0版本被移除。公司的项目逐渐要将不安全的生命周期移除，为以后版本升级Reac">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/images/%E8%80%81%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.jpg">
 <meta property="og:image" content="http://yoursite.com/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png">
 <meta property="article:published_time" content="2020-04-24T08:44:00.954Z">
-<meta property="article:modified_time" content="2020-04-27T13:15:11.118Z">
+<meta property="article:modified_time" content="2020-04-27T14:00:26.743Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/%E8%80%81%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -90,7 +91,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>React 16.3版本引入了两个新的生命周期函数，getDerivedStateFromProps，getSnapshotBeforeUpdate 。还有三个componentWillMount，componentWillReceiveProps，componentWillUpdate被标记为不安全的生命周期，将在17.0版本被移除。公司的项目逐渐要将不安全的生命周期移除，为以后版本升级React 17.0作准备。因此我们需要来对比一下新旧版本的生命周期，从而得出生命周期的替换方案。<br>图中为React 16.4版本的生命周期图谱。我们可以看到，React的生命周期仍分为三种类型。<br><img src="/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png" alt="image.png(图中为React 16.4版本生命周期图谱)"></p>
+        <p>React 16.3版本引入了两个新的生命周期函数，getDerivedStateFromProps，getSnapshotBeforeUpdate 。还有三个componentWillMount，componentWillReceiveProps，componentWillUpdate被标记为不安全的生命周期，将在17.0版本被移除。公司的项目逐渐要将不安全的生命周期移除，为以后版本升级React 17.0作准备。因此我们需要来对比一下新旧版本的生命周期，从而得出生命周期的替换方案。<br>在老版本的生命周期图谱中，被红框圈起来的三个生命周期函数就是在新版本中即将被移除的。<br><img src="/images/%E8%80%81%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.jpg" alt="image.png(图中为React 老版本生命周期图谱)"><br>下图中为React 16.4版本的生命周期图谱。我们可以看到，React的生命周期仍分为三种类型。<br><img src="/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png" alt="image.png(图中为React 16.4版本生命周期图谱)"></p>
 <ol>
 <li>挂载时，挂载指的是组件实例被创建并插入DOM中。创建时有以下几个阶段，第一个为constructor，它是一个组件的构造函数，一个组件在更新到界面之前需要被创造出来。用于初始化内部状态，它是唯一直接修改state 的地方。第二个方法为getDerivedStateFromProps,它用于从外部的属性来初始化内部的状态，返回的状态可以更新到当前的状态上。第三个方法是render,是用来描述UI的dom结构。创建过程完成后会调用didmount方法，这时候所有的UI都渲染完成了，我们可以安全地操作dom节点以及调用接口来获取外部的资源。这个方法在整个生命周期中只执行一次。</li>
 <li>更新时，它由组件的props或state发生变化时触发。更新时有以下几个阶段，第一个方法为getDerivedStateFromProps，第二个方法为shouldComponentUpdate， 它可以告诉组件我们是否需要render，可以用来性能优化。因为有时候我们在props变化时，界面UI并不需要变化，在方法中返回false告知不需要更新。返回true时react才会继续触发接下来的render。这个方法一般不需要自己去实现，react提供了purecomponent帮助我们判断props、state是否在前后有变化，如果没有变化它可以自己阻止react更新。pre-commit阶段调用getSnapshotBeforeUpdate,这个也是react 16.3新引入的方法。最后会有componentDidUpdate方法，这个方法每次UI发生更新时都会调用，react组件在外部属性或者内部状态变化时都会重新渲染，它始终会整体刷新，可以通过这个方法捕获每一次更新，从而判断是否需要其他操作。举一个我们项目中的栗子，审批的详情页，id通过url参数传入，用户切换到另一个审批，这个id发生变化，在方法中可以获取新的id对应的审批内容显示到界面上。</li>
@@ -122,6 +123,9 @@
 <p>改为</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">componentDidUpdate(prevProps, prevState) &#123;</span><br><span class="line">  <span class="keyword">if</span> (prevState.prevPropData !== <span class="keyword">this</span>.props.data) &#123;</span><br><span class="line">    <span class="keyword">this</span>.getData(data.type);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>项目中也有很多地方，仅仅是在props更改时重置某些state，没有修改state的业务需求。我们可以从组件里删除state，把它变成一个受控组件。即使仍然有需求要保存临时的值，也可以由父组件像子组件传入一个方法手动执行保存这个动作。亦或者是将组件改为有key的非受控组件，因为当key变化时，React会创建一个新的而不是更新一个既有的组件。</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Demo key=&#123;item.id&#125; defaultValue=&#123;item.value&#125;&gt;</span><br></pre></td></tr></table></figure>
+<p>每次id更改，都会重新创建组件，并将其状态重置为最新的value值。这听起来很慢，但是这点的性能是可以忽略的。如果在组件树的更新上有很重的逻辑，这样反而会更快，因为省略了子组件的diff。</p>
 </li>
 </ol>
 
