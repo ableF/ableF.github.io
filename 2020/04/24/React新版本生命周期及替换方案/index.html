@@ -16,7 +16,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png">
 <meta property="article:published_time" content="2020-04-24T08:44:00.954Z">
-<meta property="article:modified_time" content="2020-04-27T12:42:25.753Z">
+<meta property="article:modified_time" content="2020-04-27T12:48:08.780Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E8%B0%B1.png">
@@ -100,7 +100,7 @@
 <ol>
 <li><p>getDerivedStateFromProps<br>它是react 16.3新引入的api，给我们提供了一个最佳实践——如何通过属性来初始化内部状态。它的使用场景是当state需要从props初始化来使用。这个方法的名字很长，据说是开发者们不推荐大家使用，因为如果state需要从props获得，一般都可以从props计算动态得到，不需要单独存储这个状态。因为如果一旦要单独存储，这意味着我们要始终维护两者的一致性，会增加很多的复杂度，容易出现bug。它每次更新时都会调用，这个api是用来取代componentwillreceiveprops方法。它的应用场景为我们的表单控件需要获取一个默认值，因为表单除了需要用户输入值之外，开始可能会给我们一个默认值。这个默认值一旦修改之后便没有有了。因此开始的state来源于外部的初始值，但当用户输入后state便来源于用户的输入。几乎在其他场景下我们不需要使用到这个生命周期方法。</p>
 </li>
-<li><p>getSnapshotBeforeUpdate<br>页面render之前会调用，它的典型场景为获取render之前的dom状态。</p>
+<li><p>getSnapshotBeforeUpdate<br>页面render之前会调用，它的典型场景为获取render之前的dom状态。此生命周期的任何返回值将作为参数传递给componentDidUpdate(prevProps, prevState, snapshot)。</p>
 </li>
 </ol>
 <p>接下来我结合项目来说明一下生命周期的替换方案。</p>
