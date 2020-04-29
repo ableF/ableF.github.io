@@ -1,233 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-
-  
-  <title>高阶组件和函数作为子组件 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="React组件其中一个好处便是可以实现组件的重用。一个组件一旦定义好之后可以用在不同的UI场景之下。在日常的开发过程中，我们可以发现，组件的重用，不一定能满足所有的场景。今天，我来给大家介绍组件的两种复用形式：高阶组件和函数作为子组件。1.高阶组件 高价组件是对现有组件的封装，形成一个新的组件。新的组件会有自己的应用逻辑，这些逻辑会产生一些新的状态，状态需要传给现有的组件。高阶组件没有自己的UI展">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="renderer" content="webkit"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.0.0-rc.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.0.0-rc.0" type="image/png" sizes="32x32"><meta name="description" content="React组件其中一个好处便是可以实现组件的重用。一个组件一旦定义好之后可以用在不同的UI场景之下。在日常的开发过程中，我们可以发现，组件的重用，不一定能满足所有的场景。今天，我来给大家介绍组件的两种复用形式：高阶组件和函数作为子组件。1.高阶组件 高价组件是对现有组件的封装，形成一个新的组件。新的组件会有自己的应用逻辑，这些逻辑会产生一些新的状态，状态需要传给现有的组件。高阶组件没有自己的UI展">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高阶组件和函数作为子组件">
 <meta property="og:url" content="http://yoursite.com/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="无名之辈">
 <meta property="og:description" content="React组件其中一个好处便是可以实现组件的重用。一个组件一旦定义好之后可以用在不同的UI场景之下。在日常的开发过程中，我们可以发现，组件的重用，不一定能满足所有的场景。今天，我来给大家介绍组件的两种复用形式：高阶组件和函数作为子组件。1.高阶组件 高价组件是对现有组件的封装，形成一个新的组件。新的组件会有自己的应用逻辑，这些逻辑会产生一些新的状态，状态需要传给现有的组件。高阶组件没有自己的UI展">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6.png">
 <meta property="og:image" content="http://yoursite.com/images/selector.png">
 <meta property="article:published_time" content="2020-03-17T09:06:48.687Z">
 <meta property="article:modified_time" content="2020-03-31T09:31:34.314Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="前端一岁小白-able.Feng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<meta name="twitter:image" content="http://yoursite.com/images/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6.png"><meta name="keywords" content="前端一岁小白-able.Feng, 无名之辈"><meta name="description" content="谁不是，拼了命走到生命的结尾"><title>高阶组件和函数作为子组件 | 无名之辈</title><link ref="canonical" href="http://yoursite.com/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.0.0-rc.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":true},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"Copy","copySuccess":"Copy Success","copyError":"Copy Error"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
 
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-高阶组件和函数作为子组件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/" class="article-date">
-  <time datetime="2020-03-17T09:06:48.687Z" itemprop="datePublished">2020-03-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      高阶组件和函数作为子组件
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>React组件其中一个好处便是可以实现组件的重用。一个组件一旦定义好之后可以用在不同的UI场景之下。在日常的开发过程中，我们可以发现，组件的重用，不一定能满足所有的场景。今天，我来给大家介绍组件的两种复用形式：高阶组件和函数作为子组件。<br>1.高阶组件</p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">Archives</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">无名之辈</div><div class="header-banner-info__subtitle"></div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">高阶组件和函数作为子组件</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2020-03-17</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2020-03-31</span></span></div></header><div class="post-body"><p>React组件其中一个好处便是可以实现组件的重用。一个组件一旦定义好之后可以用在不同的UI场景之下。在日常的开发过程中，我们可以发现，组件的重用，不一定能满足所有的场景。今天，我来给大家介绍组件的两种复用形式：高阶组件和函数作为子组件。<br>1.高阶组件</p>
 <p>高价组件是对现有组件的封装，形成一个新的组件。新的组件会有自己的应用逻辑，这些逻辑会产生一些新的状态，状态需要传给现有的组件。高阶组件没有自己的UI展现，而只是负责为它封装的组件提供额外的功能和数据。<br><img src="/images/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6.png" alt="高阶组件.png"></p>
 <p>如上图，图中的三个圆圈代表三个组件，UI由组件树的方式来描述。当中间的蓝色组件需要一些属性时，他的父组件需要传递所有的属性给他，同样他也会把他的一些属性传给他的子组件。可以想到一个问题，如果一个组件的所有来自外部的属性都由他的父组件传递给他，那他的父组件需要知道这个组件的所有状态。如果相隔很多层节点，比如这个组件需要获取三层节点之上的节点的内部状态，则需要属性一层一层往下传，中间的两层完全不需要用到这个数据，它们接受属性的唯一目的只是为了把它往下传。我们便可以用高阶组件来解决这个问题。高阶组件可以自己去获取外部资源并对其做一定处理，然后把属性传递给封装前的组件。那么此时组件的数据便有了两个来源，一个是父组件传递给它的属性，另一个便是高阶组件传给它的一些属性。高阶组件产生一般是有个函数，这个函数接收一个组件作为参数，返回一个新的组件，我们把它叫做高阶组件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const EnhancedComponent &#x3D; HighOrderComponent(wrappedComponent)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const EnhancedComponent &#x3D; HighOrderComponent(wrappedComponent)</span><br></pre></td></tr></table></div></figure>
 
 <p>我们来看一个高阶组件的应用场景。<br>现在有一个在界面上显示当前时间的组件，每一秒变化一次。现在我们需要重用这个组件，比如有一个聊天框，我们需要在下面显示当前的时间。我们可以看一下clock组件中的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  this.timerID &#x3D; setInterval(() &#x3D;&gt; this.tick(), 1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">  clearInterval(this.timerID);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tick() &#123;</span><br><span class="line">  this.setState(&#123;</span><br><span class="line">    date: new Date()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  this.timerID &#x3D; setInterval(() &#x3D;&gt; this.tick(), 1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">  clearInterval(this.timerID);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tick() &#123;</span><br><span class="line">  this.setState(&#123;</span><br><span class="line">    date: new Date()</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 <p>它的主要逻辑就是实现一个计时器。在didmount生成一个定时器，在willunmount清除这个计时器，有一个tick方法用来更新当前时间的状态。如果我们要在一个聊天功能的页面中有一个显示时间功能，可以在这个页面加上定时器的逻辑来实现，还一种方法是把clock组件直接放入其中。如果把clock组件引入，有一个问题，clock组件决定了时间显示成啥样，但是如果我们的聊天页面需要显示另外一种时间格式，那么会有一些麻烦。比如聊天功能我们只是需要一个计时器来知道每秒的时候，如何展示是自己来决定，但是又不想重复实现这个逻辑。此时，便可以引入高阶组件的概念。用高阶组件来实现计时器的逻辑，然后把这个时间传递给聊天页面。<br>我们可以写一个计时器的代码，用来产生高阶组件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">export default function withTimer(WrappedComponent) &#123;</span><br><span class="line">  return class extends React.Component &#123;</span><br><span class="line">    state &#x3D; &#123; time: new Date() &#125;;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">      this.timerID &#x3D; setInterval(() &#x3D;&gt; this.tick(), 1000);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentWillUnmount() &#123;</span><br><span class="line">      clearInterval(this.timerID);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tick() &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        time: new Date()</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">      return &lt;WrappedComponent time&#x3D;&#123;this.state.time&#125; &#123;...this.props&#125; &#x2F;&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">export default function withTimer(WrappedComponent) &#123;</span><br><span class="line">  return class extends React.Component &#123;</span><br><span class="line">    state &#x3D; &#123; time: new Date() &#125;;</span><br><span class="line">    componentDidMount() &#123;</span><br><span class="line">      this.timerID &#x3D; setInterval(() &#x3D;&gt; this.tick(), 1000);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentWillUnmount() &#123;</span><br><span class="line">      clearInterval(this.timerID);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tick() &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        time: new Date()</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">      return &lt;WrappedComponent time&#x3D;&#123;this.state.time&#125; &#123;...this.props&#125; &#x2F;&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 <p>这个函数可以给已有的组件注入一个计时器的功能。它接收一个组件作为参数，并且返回一个组件作为返回值。可以看到它内部有正常的生命周期方法，但是它的render函数并没有自己任何新的东西，只是把传入的组件render，但是会增加一些其他的属性。比如这里增加的是time属性。<br>回到聊天页面，我们想要在其中加入计时器的功能，便可以引入这个withTimer，我们现在导出的是封装后的高阶组件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;MessageList messages&#x3D;&#123;this.state.messages&#125; &#x2F;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;input value&#x3D;&#123;this.state.inputMsg&#125; &#x2F;&gt;</span><br><span class="line">          &lt;button onClick&#x3D;&#123;this.handleSend&#125;&gt;Send&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;h2&gt;&#123;this.props.time.toLocaleString()&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default withTimer(ChatApp);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;MessageList messages&#x3D;&#123;this.state.messages&#125; &#x2F;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;input value&#x3D;&#123;this.state.inputMsg&#125; &#x2F;&gt;</span><br><span class="line">          &lt;button onClick&#x3D;&#123;this.handleSend&#125;&gt;Send&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;h2&gt;&#123;this.props.time.toLocaleString()&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default withTimer(ChatApp);</span><br></pre></td></tr></table></div></figure>
 <p>此时，原组件有了time的属性，我们把它在render方法中展示出来，显示一个当前时间的字符串。我们可以看到时间已经在聊天页面展示了，但是我们并不是重用了clock组件，而是写了一个高阶组件的函数，这个函数实现了一个定时器的逻辑，把时间通过props传入原组件。同样的，我们需要在另一个组件中实现不同格式的时间，也是很容易的，只需要把props传入的时间通过另一种格式展示出来就ok了。<br>以上便是高阶组件的一个应用场景实例，它可以帮你去实现一些通用的逻辑被不同组件使用，但是它自身并没有任何UI展现。</p>
 <p>2.函数作为子组件<br>函数作为子组件是一个设计模式而不是react一个新的特性。看如下代码，定义了一个myComponent。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class myComponent extends React.Component &#123;</span><br><span class="line">  render( ) &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &#123;this.props.children(&#39;able Feng&#39;)&#125;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">     );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class myComponent extends React.Component &#123;</span><br><span class="line">  render( ) &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &#123;this.props.children(&#39;able Feng&#39;)&#125;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">     );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></div></figure>
 <p>它是直接调用了children这个函数，说明它已经假设传入的children为一个函数。使用的时候需要在mycomponent的子元素中定义一个函数，这个函数接收一个参数返回一个节点。我们不是直接把一个节点作为children，而是把一个函数作为children。这并不是react的一个特性，而是因为mycomponent已经决定了自己是如何使用children，因此它是一个设计模式而不是一种特殊类型组件。<br>看如下例子，我们用函数作为子组件的方式来实现让外部告知你如何显示你选中的状态。我们选中一个颜色它直接展示颜色，选中小动物直接展示小动物的图片。<br><img src="/images/selector.png" alt="函数子组件.jpg"><br>定义一个advancedtabselector组件，它有一个children的属性，我们定义为一个function，即可执行的。除了tab的选中逻辑，现在加入了一个额外的内容区域，this.props.children由外部决定如何render选中的值，如果有value便调用这个children的函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  return(</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &#123;this.props.value&amp;&amp;this.props.children(this.props.value)&#125;</span><br><span class="line">    &lt;&#x2F;&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  return(</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &#123;this.props.value&amp;&amp;this.props.children(this.props.value)&#125;</span><br><span class="line">    &lt;&#x2F;&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
 <p>在使用这个组件时，我们可以定义一个函数作为这个advancedtabselector组件的children。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;AdvancedTabSelector</span><br><span class="line">         options&#x3D;&#123;colors&#125;</span><br><span class="line">         value&#x3D;&#123;this.state.color&#125;</span><br><span class="line">         onChange&#x3D;&#123;c &#x3D;&gt; this.setState(&#123; color: c &#125;)&#125;</span><br><span class="line">       &gt;</span><br><span class="line">         &#123;color &#x3D;&gt; (</span><br><span class="line">           &lt;span</span><br><span class="line">             style&#x3D;&#123;&#123;</span><br><span class="line">               display: &quot;inline-block&quot;,</span><br><span class="line">               backgroundColor: color,</span><br><span class="line">               width: &quot;40px&quot;,</span><br><span class="line">               height: &quot;40px&quot;</span><br><span class="line">             &#125;&#125;</span><br><span class="line">           &#x2F;&gt;</span><br><span class="line">         )&#125;</span><br><span class="line">       &lt;&#x2F;AdvancedTabSelector&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;AdvancedTabSelector</span><br><span class="line">         options&#x3D;&#123;colors&#125;</span><br><span class="line">         value&#x3D;&#123;this.state.color&#125;</span><br><span class="line">         onChange&#x3D;&#123;c &#x3D;&gt; this.setState(&#123; color: c &#125;)&#125;</span><br><span class="line">       &gt;</span><br><span class="line">         &#123;color &#x3D;&gt; (</span><br><span class="line">           &lt;span</span><br><span class="line">             style&#x3D;&#123;&#123;</span><br><span class="line">               display: &quot;inline-block&quot;,</span><br><span class="line">               backgroundColor: color,</span><br><span class="line">               width: &quot;40px&quot;,</span><br><span class="line">               height: &quot;40px&quot;</span><br><span class="line">             &#125;&#125;</span><br><span class="line">           &#x2F;&gt;</span><br><span class="line">         )&#125;</span><br><span class="line">       &lt;&#x2F;AdvancedTabSelector&gt;</span><br></pre></td></tr></table></div></figure>
 <p>它的参数是当前颜色，我们来决定它如何显示颜色，例子中用span来展示颜色。同样的，如果选中是一个animal，定义一个函数接收animal作为参数，渲染出来一个图片。可以看到函数作为子组件有一个特点，一个组件如何render它的内容可以由使用者来决定，对于这个tabselector如何render选中的状态，可以由用tabselector的人来决定，而不是在组件内部不停增加自身功能来适配外部的使用场景，这样组件内部可以只有很小的scope，它的灵活性可以由函数作为子组件来决定。</p>
 <p>3.总结：<br>组件复用的两种形式——高阶组件和函数作为子组件均为使用react的组件的新的方式，称为设计模式，而不是代表react有两种新类型的组件。在工作开发中我们可以结合业务场景去使用这两种设计模式。`</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/" data-id="ck8edvsxi0000h65x7s5j13i3" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2020/04/24/React%E6%96%B0%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%8A%E6%9B%BF%E6%8D%A2%E6%96%B9%E6%A1%88/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          React新版本生命周期及替换方案
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2020/03/17/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/04/24/React%E6%96%B0%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%8A%E6%9B%BF%E6%8D%A2%E6%96%B9%E6%A1%88/">React新版本生命周期及替换方案</a>
-          </li>
-        
-          <li>
-            <a href="/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/">高阶组件和函数作为子组件</a>
-          </li>
-        
-          <li>
-            <a href="/2020/03/17/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
-</body>
-</html>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">Author: </span><span class="copyright-author__value"><a href="http://yoursite.com">前端一岁小白-able.Feng</a></span></div><div class="copyright-link"><span class="copyright-link__name">Link: </span><span class="copyright-link__value"><a href="http://yoursite.com/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/">http://yoursite.com/2020/03/17/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AD%90%E7%BB%84%E4%BB%B6/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">Copyright: </span><span class="copyright-notice__value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2020/04/24/React%E6%96%B0%E7%89%88%E6%9C%AC%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%8F%8A%E6%9B%BF%E6%8D%A2%E6%96%B9%E6%A1%88/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">React新版本生命周期及替换方案</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2020/03/17/hello-world/"><span class="paginator-prev__text">Hello World</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/avatar.jpeg" alt="avatar"></div><p class="sidebar-ov-author__text">谁不是，拼了命走到结尾，也许卑微，一生狼狈</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">3</div><div class="sidebar-ov-state-item__name">Archives</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2020</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>前端一岁小白-able.Feng</span></div><div><span>Powered by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a></span><span> v4.2.0</span><span class="footer__devider">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.0.0-rc.0</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.0.0-rc.0"></script><script src="/js/stun-boot.js?v=2.0.0-rc.0"></script><script src="/js/scroll.js?v=2.0.0-rc.0"></script><script src="/js/header.js?v=2.0.0-rc.0"></script><script src="/js/sidebar.js?v=2.0.0-rc.0"></script></body></html>
