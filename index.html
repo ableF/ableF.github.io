@@ -34,8 +34,8 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"></he
         <h4 id="1-some-和-find"   >
           <a href="#1-some-和-find" class="heading-link"><i class="fas fa-link"></i></a>1.some 和 find</h4>
       <p>当我们需要在数组中寻找一个元素时，我们通常会想到Array.find。它需要一个回调函数，并返回符合条件的第一个元素。然而，当我们仅仅需要知道数组中是否存在符合条件的元素时，Array.some或许是一个更好的办法，因为它返回的是一个布尔值。</p>
-<figure class="highlight js"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.find(fn, thisArg)</span><br></pre></td></tr></table></div></figure>
-<p>fn 表示在数组每一项上执行的函数，接受三个参数：<br>value 当前正在被处理的元素的值<br>index 当前元素的数组索引<br>array 数组本身<br>thisArg 可选，用来当做fn函数内的this对象<br>说到find，在es6中它有一个兄弟Array.findIndex。它的入参和find基本一致，只不过它返回的是第一个符合条件的项在数组中的位置，如果没有符合条件的则返回-1。</p>
+<figure class="highlight js"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.find(callback, thisArg)</span><br></pre></td></tr></table></div></figure>
+<p>callback 是数组每一项都会执行的回调函数，它接受三个参数：<br>value 当前正在被处理的项<br>index 当前项的索引<br>array 数组本身<br>thisArg 可选，用来当做fn函数内的this对象<br>说到find，在es6中它有一个兄弟Array.findIndex。它的入参和find基本一致，只不过它返回的是第一个符合条件的项在数组中的位置，如果没有符合条件的则返回-1。</p>
 
         <h4 id="2-find-和-filter"   >
           <a href="#2-find-和-filter" class="heading-link"><i class="fas fa-link"></i></a>2.find 和 filter</h4>
